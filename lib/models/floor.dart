@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 
 class Floor {
-  const Floor({
+  Floor({
     required this.id,
     required this.callback,
   });
   final int id;
   final Function(int, bool) callback;
+  List<int> currentLifts = [];
+
+  void liftArrived(int liftId) {
+    currentLifts.add(liftId);
+  }
+
+  void liftLeft(int liftId) {
+    currentLifts.remove(liftId);
+  }
 
   Widget build() {
     return Padding(

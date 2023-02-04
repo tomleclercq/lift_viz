@@ -4,31 +4,39 @@ import 'package:lift_viz/models/floor.dart';
 import 'lift.dart';
 
 class Building {
+  final Function refresh;
   static const List<String> names = ['A', 'B', 'C'];
-  static const int levelCount = 10;
+  static const int floorCount = 10;
   static const int lifCount = 1;
   List<Lift> lifts = [];
   List<Floor> floors = [];
 
-  Building() {
+  Building({required this.refresh}) {
     List<Lift> liftList = [];
     for (int i = 0; i < lifCount; i++) {
-      liftList.add(Lift(
-          id: i, name: names[i], levelCount: levelCount, callback: moveLift));
+      liftList.add(
+        Lift(
+          id: i,
+          name: names[i],
+          floorCount: floorCount,
+          sendLift: moveLift,
+          refresh: refresh,
+        ),
+      );
     }
     lifts = liftList;
     List<Floor> floorList = [];
-    for (int i = 0; i < levelCount; i++) {
+    for (int i = 0; i < floorCount; i++) {
       floorList.add(Floor(id: i, callback: callLift));
     }
     floors = floorList;
   }
 
-  void callLift(int level, bool goingUp) {
-    debugPrint('Lift required from $level to go ${goingUp ? 'up' : 'down'}');
+  void callLift(int floor, bool goingUp) {
+    debugPrint('Lift required from $floor to go ${goingUp ? 'up' : 'down'}');
   }
 
-  void moveLift(int liftId, int level, int targetLevel) {
-    debugPrint('Lift ${names[liftId]} from $level to go level $targetLevel');
+  void moveLift(int liftId, int floor, int targetfloor) {
+    debugPrint('Lift ${names[liftId]} from $floor to go floor $targetfloor');
   }
 }

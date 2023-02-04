@@ -9,11 +9,13 @@ class Orchestrator extends StatefulWidget {
 }
 
 class _OrchestratorState extends State<Orchestrator> {
-  Building building = Building();
+  late Building? building;
+
   @override
   void initState() {
     super.initState();
-    debugPrint('${building.lifts.length}');
+    building = Building(refresh: () => setState(() {}));
+    debugPrint('${building?.lifts.length}');
   }
 
   @override
@@ -27,7 +29,7 @@ class _OrchestratorState extends State<Orchestrator> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ...building.floors.map((f) => f.build()).toList(),
+                ...building!.floors.map((f) => f.build()).toList(),
               ],
             ),
           ),
@@ -35,7 +37,7 @@ class _OrchestratorState extends State<Orchestrator> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ...building.lifts.map((l) => l.build()).toList(),
+              ...building!.lifts.map((l) => l.build()).toList(),
             ],
           ),
         ],
