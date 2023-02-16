@@ -17,7 +17,7 @@ class Lift {
 
   int floor = 0;
   int targetfloor = 0;
-  bool goingUp = false;
+  bool? goingUp = false;
   double height = 0;
 
   void onPress(int targetFloor) {
@@ -26,6 +26,11 @@ class Lift {
     } else {
       currentSelection.add(targetFloor);
       sendLift(id, floor, targetFloor);
+    }
+    if (currentSelection.isEmpty) {
+      goingUp = null;
+    } else {
+      goingUp = targetfloor > floor;
     }
     refresh();
   }
@@ -39,9 +44,13 @@ class Lift {
         children: [
           Text('Lift: $name'),
           FloorSelector(
-              floorCount: floorCount,
-              currentSelection: currentSelection,
-              onPress: onPress)
+            goingUp: goingUp,
+            currentFloor: floor,
+            floorCount: floorCount,
+            currentSelection: currentSelection,
+            onPress: onPress,
+          ),
+          Text('floor: $floor'),
         ],
       ),
     );

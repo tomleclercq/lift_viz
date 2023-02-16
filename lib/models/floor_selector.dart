@@ -2,24 +2,30 @@ import 'package:flutter/material.dart';
 
 class FloorSelector extends StatelessWidget {
   const FloorSelector({
+    required this.goingUp,
+    required this.currentFloor,
     required this.floorCount,
     required this.onPress,
     required this.currentSelection,
     super.key,
   });
+  final bool? goingUp;
+  final int currentFloor;
   final int floorCount;
   final List<int> currentSelection;
   final Function(int) onPress;
 
   Widget floorButton(int index) {
     return ElevatedButton(
+      onPressed: goingUp == null || index == currentFloor
+          ? null
+          : () {
+              onPress(index);
+            },
       child: Container(
         color: currentSelection.any((e) => e == index) ? Colors.amber : null,
         child: Text('$index'),
       ),
-      onPressed: () {
-        onPress(index);
-      },
     );
   }
 

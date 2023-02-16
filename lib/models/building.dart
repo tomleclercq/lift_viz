@@ -39,4 +39,43 @@ class Building {
   void moveLift(int liftId, int floor, int targetfloor) {
     debugPrint('Lift ${names[liftId]} from $floor to go floor $targetfloor');
   }
+
+  Widget build() {
+    return Container(
+      color: Colors.amber,
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              ...floors.reversed
+                  .map(
+                    (f) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: 50,
+                        height: 24,
+                        color: Colors.red,
+                        child: SizedBox.expand(
+                          child:
+                              Center(child: Text(floors.indexOf(f).toString())),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList()
+            ],
+          ),
+          Positioned(
+            left: 8,
+            bottom: 8,
+            child: Container(
+              color: Colors.blue,
+              height: 50,
+              width: 50,
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
